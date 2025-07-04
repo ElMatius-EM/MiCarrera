@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de mi carrera</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Gestión de mi carrera</h1>
+            <h5>Licenciatura en Informática</h5>
+            <nav class="main-nav">
+                <button class="nav-button active" data-section="dashboard">Dashboard</button>
+                <button class="nav-button" data-section="mapa-carrera">Materias</button>
+                <button class="nav-button" data-section="materias-cursando">Mis Materias Actuales</button>
+                <button class="nav-button" data-section="horario-academico">Horario</button>
+                <button class="nav-button" data-section="tareas-pendientes">Tareas</button>
+            </nav>
+        </header>
+
+        <main class="app-main">
+            <section id="dashboard" class="app-section active">
+                <div class="section-header">
+                    <h2>Mi progreso en la carrera</h2>
+                    <button class="button-danger" id="reset-progress-button">Resetear progreso</button>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="overall-progress-bar"></div>
+                    <span class="progress-text" id="overall-progress-text">0% de la carrera completada</span>
+                </div>
+                <div class="dashboard-content">
+                    <div class="dashboard-card next-goal-card">
+                        <h3>Materias que Curso</h3>
+                        <ul id="current-dashboard-subjects-list">
+                        </ul>
+                        <button id="go-to-cursando-button" class="button-primary icon-button">
+                            <i class="fas fa-plus"></i> Añadir/Ver Materias
+                        </button>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Próximos Parciales</h3>
+                        <ul id="upcoming-partials-list">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mapa-carrera" class="app-section">
+                <h2>Mapa de Mi Carrera</h2>
+                <div class="map-controls">
+                    <label for="filter-year">Filtrar por Año:</label>
+                    <select id="filter-year">
+                        <option value="all">Todos</option>
+                        <option value="1">1° Año</option>
+                        <option value="2">2° Año</option>
+                        <option value="3">3° Año</option>
+                        <option value="4">4° Año</option>
+                        <option value="5">5° Año</option>
+                        <option value="Grado">Requisitos de Grado</option>
+                    </select>
+                </div>
+                <div class="map-container" id="map-container">
+                </div>
+            </section>
+
+
+            <section id="materias-cursando" class="app-section">
+                <h2>Mis Materias Actuales</h2>
+                <div class="add-cursando-form">
+                    <select id="add-cursando-select">
+                        <option value="">Selecciona una materia para cursar</option>
+                    </select>
+                    <button id="add-cursando-btn" class="button-primary">Añadir a Cursando</button>
+                </div>
+                <ul id="current-subjects-list" class="subject-list">
+                </ul>
+            </section>
+
+
+            <section id="horario-academico" class="app-section">
+                <h2>Mi Horario Académico</h2>
+                <div class="horario-editor">
+                    <textarea id="horario-text"
+                        placeholder="Ingresa aquí tu horario académico (ej: Lunes 9-11: Programación, Aula 101)"></textarea>
+                    <button id="save-horario-btn" class="button-primary">Guardar Horario</button>
+                </div>
+                <div class="horario-display" id="horario-display">
+                </div>
+            </section>
+
+
+            <section id="tareas-pendientes" class="app-section">
+                <h2>Mis Tareas Pendientes</h2>
+                <div class="add-task-form">
+                    <input type="text" id="new-task-text" placeholder="Descripción de la tarea">
+                    <select id="new-task-subject-select">
+                        <option value="">Asociar a materia (opcional)</option>
+                    </select>
+                    <button id="add-task-btn" class="button-primary">Añadir Tarea</button>
+                </div>
+                <ul id="tasks-list" class="task-list">
+                </ul>
+            </section>
+
+
+            <div id="detalle-materia-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2 id="modal-materia-nombre"></h2>
+                    <p><strong>Código:</strong> <span id="modal-materia-id"></span></p>
+                    <p><strong>Año:</strong> <span id="modal-materia-anio"></span></p>
+
+                    <h3>Correlativas Anteriores</h3>
+                    <ul id="modal-correlativas-anteriores"></ul>
+
+                    <h3>Correlativas Posteriores</h3>
+                    <ul id="modal-correlativas-posteriores"></ul>
+
+                    <div class="section-divider"></div>
+
+                    <h3>Progreso de Parciales</h3>
+                    <div class="partials-controls">
+                        <label for="total-partials">Total de Parciales:</label>
+                        <input type="number" id="total-partials" min="0" value="0">
+                        <div id="partials-inputs" class="partials-inputs">
+                        </div>
+                        <div class="progress-bar-container small">
+                            <div class="progress-bar-fill" id="partials-progress-bar"></div>
+                            <span class="progress-text" id="partials-progress-text">0/0 Parciales Aprobados</span>
+                        </div>
+                        <button id="save-partials-btn" class="button-primary">Guardar Parciales</button>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3>Recursos Adicionales</h3>
+                    <ul id="modal-recursos-list" class="resource-list">
+                    </ul>
+                    <div class="add-resource-form">
+                        <input type="text" id="new-resource-title" placeholder="Título del recurso">
+                        <input type="url" id="new-resource-url" placeholder="URL del recurso">
+                        <button id="add-resource-btn" class="button-primary">Añadir Recurso</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<div id="notification-container"></div>
+
+</html>
